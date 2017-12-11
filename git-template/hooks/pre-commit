@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "\x1b[32m$(basename $0)\x1b[0m: Hook script triggered"
+echo "\x1b[32m$(basename $0)\x1b[0m: Current directory: $(pwd)"
 
 if [ -z "$(which git-secrets)" ] ; then
   echo "\x1b[31mERROR\x1b[0m: git-secrets is not available"
