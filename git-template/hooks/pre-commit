@@ -1,7 +1,10 @@
 #!/bin/sh
 
+# Project type detection
+export node_project=0
+export net_project=0
+
 echo "\x1b[32m$(basename $0)\x1b[0m: Hook script triggered"
-echo "\x1b[32m$(basename $0)\x1b[0m: Current directory: $(pwd)"
 
 if [ -z "$(which git-secrets)" ] ; then
   echo "\x1b[31mERROR\x1b[0m: git-secrets is not available"
@@ -9,5 +12,17 @@ if [ -z "$(which git-secrets)" ] ; then
   echo "committing any code to this repository"
   exit 1
 fi
+
+if [ -f "$(pwd)/package.json" || -d "$(pwd)/node_modules" ] ; then
+  echo "\x1b[32m$(basename $0)\x1b[0m: node.js project identified"
+  if [ ! -f "$(pwd)/node_modules/.bin/eslint" && -z "$(which eslint)" ] ; then
+    echo "\x1b[31mERROR\x1b[0m: node.js projects require eslint installed"
+    echo "either globally or as a project dependency"
+  fi
+  node_project=1
+fi
+
+echo "\x1b[32m$(basename $0)\x1b[0m: node_project=${node_project}"
+echo "\x1b[32m$(basename $0)\x1b[0m: net_project=${net_project}"
 
 exit 0
