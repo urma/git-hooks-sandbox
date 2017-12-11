@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "\x1b[32m$(basename $0)\x1b[0m: Hook script triggered"
+exit 0
