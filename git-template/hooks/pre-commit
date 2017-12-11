@@ -1,4 +1,12 @@
 #!/bin/sh
 
 echo "\x1b[32m$(basename $0)\x1b[0m: Hook script triggered"
+
+if [ -z "$(which git-secrets)" ] ; then
+  echo "\x1b[31mERROR\x1b[0m: git-secrets is not available"
+  echo "Please install https://github.com/awslabs/git-secrets before"
+  echo "committing any code to this repository"
+  exit 1
+fi
+
 exit 0
