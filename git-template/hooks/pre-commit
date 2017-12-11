@@ -13,9 +13,9 @@ if [ -z "$(which git-secrets)" ] ; then
   exit 1
 fi
 
-if [ -f "$(pwd)/package.json" || -d "$(pwd)/node_modules" ] ; then
+if [ -f "$(pwd)/package.json" -o -d "$(pwd)/node_modules" ] ; then
   echo "\x1b[32m$(basename $0)\x1b[0m: node.js project identified"
-  if [ ! -f "$(pwd)/node_modules/.bin/eslint" && -z "$(which eslint)" ] ; then
+  if [ ! -f "$(pwd)/node_modules/.bin/eslint" -a -z "$(which eslint)" ] ; then
     echo "\x1b[31mERROR\x1b[0m: node.js projects require eslint installed"
     echo "either globally or as a project dependency"
   fi
