@@ -1,0 +1,18 @@
+#!/bin/sh
+
+echo "\x1b[32m$(basename $0)\x1b[0m: node.js project identified"
+
+# Confirm eslint is available
+if [ ! -f "$(pwd)/node_modules/.bin/eslint" -a -z "$(which eslint)" ] ; then
+  echo "\x1b[31mERROR\x1b[0m: node.js projects require eslint installed"
+  echo "either globally or as a project dependency"
+  exit 1
+fi
+
+if [ -f "$(pwd)/node_modules/.bin/eslint" ] ; then
+  export eslint_path="$(pwd)/node_modules/.bin/eslint"
+else
+  export eslint_path="$(which eslint)"
+fi
+
+git-secrets --scan && ${eslint_path} $(pwd)
